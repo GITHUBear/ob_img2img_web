@@ -1,0 +1,1 @@
+from oceanbase.ob import ObImgVec

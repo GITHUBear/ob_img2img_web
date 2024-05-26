@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  streamlitapp:
+    image: streamlit-app
+    ports: 
+      - 8501:8501
+    networks:
+      - obnet
+    depends_on: 
+      - oceanbase
+  oceanbase:
+    image: oceanbase/oceanbase-ce:vector
+    ports: 
+      - 2881:2881
+    networks:
+      - obnet
+
+networks:
+  obnet:
+    driver: bridge
+    name: obnet

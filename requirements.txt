@@ -1,0 +1,9 @@
+streamlit
+watchdog
+sqlalchemy
+towhee
+opencv-python
+torch
+torchvision
+transformers
+pymysql
