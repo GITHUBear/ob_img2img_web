@@ -14,16 +14,24 @@ docker build -t streamlit-app .
 docker-compose up
 ```
 
-3. After `boot success!`, open a bash with:
+3. Get container id of `streamlit-app`:
 
 ```shell
-docker exec -it streamlit-app bash
+> docker ps
+> CONTAINER ID     IMAGE            COMMAND
+  <container_id>   streamlit-app    "tail -f /dev/null"
 ```
 
-4. start streamlit app
+4. After `boot success!`, open a bash with:
+
+```shell
+docker exec -it <container_id> bash
+```
+
+5. start streamlit app
 
 ```shell
 streamlit run app.py
 ```
 
-5. Visit `localhost:8501`
+6. Visit `localhost:8501`
