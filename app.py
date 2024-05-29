@@ -77,13 +77,13 @@ def on_file_uploaded_tab2():
     st.session_state.files_uploaded_tab1 = False
 
 # 创建两个功能标签页
-tab1, tab2 = st.tabs(["图片处理", "相似图片搜索"])
+tab1, tab2 = st.tabs(["Image Embedding", "Similar Search"])
 
 with tab1:
-    st.header("图片处理")
+    st.header("Image Embedding")
     
     # 文件导入组件
-    uploaded_files = st.file_uploader("选择图片文件或拖拽图片到这里", 
+    uploaded_files = st.file_uploader("Select your images", 
                                       accept_multiple_files=True, 
                                       type=['png', 'jpg', 'jpeg'],
                                       on_change=on_file_uploaded_tab1)
@@ -102,19 +102,19 @@ with tab1:
             # 更新进度条
             progress_bar.progress(index / len(uploaded_files))
 
-        st.success("所有图片已处理完成!")
+        st.success("Image Embedding finish!")
 
 with tab2:
-    st.header("相似图片搜索")
+    st.header("Similar Search")
     
     # 文件导入组件
-    uploaded_file = st.file_uploader("选择一个图片文件", 
+    uploaded_file = st.file_uploader("Choose one image", 
                                      type=['png', 'jpg', 'jpeg'], 
                                      key="uploader2",
                                      on_change=on_file_uploaded_tab2)
     
     # 1到10的slide组件
-    num_results = st.slider("选择相似图片的数量", 1, 10, value=5)
+    num_results = st.slider("How many images do you want to search?", 1, 10, value=5)
     
     # 当文件被上传时执行
     if uploaded_file and st.session_state.file_uploaded_tab2:
@@ -122,14 +122,14 @@ with tab2:
         with tempfile.NamedTemporaryFile(delete=True, suffix=os.path.splitext(uploaded_file.name)[-1]) as tmpfile:
             tmpfile.write(uploaded_file.getvalue())
             image_path = tmpfile.name
-            st.write("原图:")
+            st.write("Your input image:")
             st.image(image_path, width=300)
         
             # 搜索相似图片
             similar_images, similarity, cost = find_similar_images(image_path, num_results)
         
             # 展示找到的相似图片
-            st.write(f"搜索完成({cost} s) 相似图片:")
+            st.write(f"Search finish in {cost} s. Here are the similar images:")
             for similar_image, sim in zip(similar_images, similarity):
-                st.write(f"相似度: {sim}")
+                st.write(f"Similarity: {sim}")
                 st.image(similar_image, width=800)
