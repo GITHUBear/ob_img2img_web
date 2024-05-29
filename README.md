@@ -10,7 +10,7 @@ This is a demo of similar image search based on OceanBase Vector Store.
 1. Build docker image.
 
 ```shell
-docker build -t streamlit-app .
+docker build -t ob_img2img .
 ```
 
 2. Run docker image with docker-compose.
