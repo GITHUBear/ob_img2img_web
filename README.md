@@ -1,5 +1,10 @@
 # An img2img demo for OceanBase Vector Store
 
+This is a demo of similar image search based on OceanBase Vector Store.
+
+- [OceanBase Vector Store](https://github.com/oceanbase/oceanbase/tree/vector_search)
+- [text2img embedding model: CLIP](https://huggingface.co/openai/clip-vit-large-patch14)
+
 ## How to deploy demo with docker?
 
 1. Build docker image.
@@ -14,24 +19,16 @@ docker build -t streamlit-app .
 docker-compose up
 ```
 
-3. Get container id of `streamlit-app`:
+3. After `boot success!`, visit `localhost:8501`
 
-```shell
-> docker ps
-> CONTAINER ID     IMAGE            COMMAND
-  <container_id>   streamlit-app    "tail -f /dev/null"
-```
+- Select the image you want to import. (Here are some sample images in the `img` directory)
 
-4. After `boot success!`, open a bash with:
+![import_photo](readme_img/import_photo.png)
 
-```shell
-docker exec -it <container_id> bash
-```
+- Waiting for image embedding & vector insertion into OceanBase.
 
-5. start streamlit app
+![wait_for_finish](readme_img/wait_for_finish.png)
 
-```shell
-streamlit run app.py
-```
+- Do similar image search.
 
-6. Visit `localhost:8501`
+![search](readme_img/search.png)

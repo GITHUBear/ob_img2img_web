@@ -131,6 +131,7 @@ class ObImgVec:
         with self.ob_vector_db.connect() as conn:
             begin_ts = datetime.datetime.now()
             results: Sequence[Row] = conn.execute(text(sql_query)).fetchall()
-            print(f"Search {sql_query_str_for_print} cost: {(datetime.datetime.now() - begin_ts).total_seconds()} s")
-            return [res for res in results]
-        return []
+            cost = (datetime.datetime.now() - begin_ts).total_seconds()
+            print(f"Search {sql_query_str_for_print} cost: {cost} s")
+            return [res for res in results], cost
+        return [], 0.0

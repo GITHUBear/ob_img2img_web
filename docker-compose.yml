@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   streamlitapp:
-    image: streamlit-app
+    image: ob_img2img
     ports: 
       - 8501:8501
     networks:

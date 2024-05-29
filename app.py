@@ -53,12 +53,12 @@ def process_image(image_path, target_path):
         first_embedding = False
     obvec.ob_insert_img2img(vec, target_path)
 
-# 伪造一个相似图片搜索的函数
 def find_similar_images(image_path, num_results):
     query_vec = img_embedding(image_path)
-    res = obvec.ob_ann_search("<~>", query_vec, num_results)
+    res, cost = obvec.ob_ann_search("<~>", query_vec, num_results)
     result_paths = [r.path for r in res]
-    return result_paths
+    similarity = [1 - r.distance for r in res]
+    return result_paths, similarity, cost
 
 # 设置应用的布局为宽模式
 st.set_page_config(layout="wide")
@@ -123,12 +123,13 @@ with tab2:
             tmpfile.write(uploaded_file.getvalue())
             image_path = tmpfile.name
             st.write("原图:")
-            st.image(image_path, width=300) # 展示原图
+            st.image(image_path, width=300)
         
             # 搜索相似图片
-            similar_images = find_similar_images(image_path, num_results)
+            similar_images, similarity, cost = find_similar_images(image_path, num_results)
         
             # 展示找到的相似图片
-            st.write("相似图片:")
-            for similar_image in similar_images:
-                st.image(similar_image, width=300)
+            st.write(f"搜索完成({cost} s) 相似图片:")
+            for similar_image, sim in zip(similar_images, similarity):
+                st.write(f"相似度: {sim}")
+                st.image(similar_image, width=800)
